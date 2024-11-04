@@ -1,0 +1,5 @@
+{
+  "get started": {
+    "selector": "locator('a:has-text(\"Get started\")')"
+  }
+}
