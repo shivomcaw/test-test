@@ -13,7 +13,12 @@ export class SelectorGenerator {
       text: el.textContent?.trim(),
       id: el.id,
       classes: Array.from(el.classList),
+      testId: el.getAttribute("data-testid"),
     }));
+
+    if (elementInfo.testId) {
+      return `getByTestId('${elementInfo.testId}')`;
+    }
 
     if (elementInfo.isHeading) {
       return `getByRole('heading', { name: '${elementInfo.text}' })`;
