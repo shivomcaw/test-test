@@ -1,7 +1,8 @@
 import { Page, Locator } from "@playwright/test";
 import { ElementFinder } from "./element-finder/element-finder";
 import { LocatorStorage } from "./storage/locator-storage";
-import { LocatorOptions } from "./types/element-info";
+import { ElementInfo, LocatorOptions } from "./types/element-info";
+import { findMostSimilarElementHandle } from "./cosine-similarity";
 
 export class LocatorManager {
   private page: Page;
@@ -14,22 +15,9 @@ export class LocatorManager {
     this.storage = new LocatorStorage();
   }
 
-  private async findBestMatch(
-    query: string,
-    elements: Array<{ text: string; selector: string }>
-  ) {
-    // TODO: Replace with actual similarity matching using transformers
-    const match = elements.find(
-      ({ text }) =>
-        text.toLowerCase() === query.toLowerCase() ||
-        text.toLowerCase().includes(query.toLowerCase())
-    );
-
-    if (!match) {
-      throw new Error(`No matching element found for: ${query}`);
-    }
-
-    return match.selector;
+  private async findBestMatch(query: string, elements: ElementInfo[]) {
+    return (await findMostSimilarElementHandle(query, elements)).element
+      .selector;
   }
 
   async getLocator(

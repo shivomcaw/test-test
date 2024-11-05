@@ -12,6 +12,8 @@
     "@types/node": "^22.8.5"
   },
   "dependencies": {
+    "@huggingface/transformers": "^3.0.2",
+    "@xenova/transformers": "^2.17.2",
     "dom-to-semantic-markdown": "^1.2.14",
     "jsdom": "^25.0.1"
   }
